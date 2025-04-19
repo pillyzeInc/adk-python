@@ -132,9 +132,9 @@ class StorageEvent(Base):
   user_id: Mapped[str] = mapped_column(String(255), primary_key=True)
   session_id: Mapped[str] = mapped_column(String(255), primary_key=True)
 
-  invocation_id: Mapped[str] = mapped_column(String)
-  author: Mapped[str] = mapped_column(String)
-  branch: Mapped[str] = mapped_column(String, nullable=True)
+  invocation_id: Mapped[str] = mapped_column(String(255))
+  author: Mapped[str] = mapped_column(String(255))
+  branch: Mapped[str] = mapped_column(String(255), nullable=True)
   timestamp: Mapped[DateTime] = mapped_column(DateTime(), default=func.now())
   content: Mapped[dict[str, Any]] = mapped_column(DynamicJSON)
   actions: Mapped[MutableDict[str, Any]] = mapped_column(PickleType)
@@ -147,8 +147,8 @@ class StorageEvent(Base):
   )
   partial: Mapped[bool] = mapped_column(Boolean, nullable=True)
   turn_complete: Mapped[bool] = mapped_column(Boolean, nullable=True)
-  error_code: Mapped[str] = mapped_column(String, nullable=True)
-  error_message: Mapped[str] = mapped_column(String, nullable=True)
+  error_code: Mapped[str] = mapped_column(String(255), nullable=True)
+  error_message: Mapped[str] = mapped_column(String(255), nullable=True)
   interrupted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
   storage_session: Mapped[StorageSession] = relationship(
