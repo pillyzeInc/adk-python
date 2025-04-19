@@ -99,10 +99,10 @@ class StorageSession(Base):
   """Represents a session stored in the database."""
   __tablename__ = "sessions"
 
-  app_name: Mapped[str] = mapped_column(String(255), primary_key=True)
-  user_id: Mapped[str] = mapped_column(String(255), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
+  user_id: Mapped[str] = mapped_column(String(32), primary_key=True)
   id: Mapped[str] = mapped_column(
-      String(255), primary_key=True, default=lambda: str(uuid.uuid4())
+      String(32), primary_key=True, default=lambda: str(uuid.uuid4())
   )
 
   state: Mapped[MutableDict[str, Any]] = mapped_column(
@@ -127,10 +127,10 @@ class StorageEvent(Base):
   """Represents an event stored in the database."""
   __tablename__ = "events"
 
-  id: Mapped[str] = mapped_column(String(255), primary_key=True)
-  app_name: Mapped[str] = mapped_column(String(255), primary_key=True)
-  user_id: Mapped[str] = mapped_column(String(255), primary_key=True)
-  session_id: Mapped[str] = mapped_column(String(255), primary_key=True)
+  id: Mapped[str] = mapped_column(String(32), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
+  user_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+  session_id: Mapped[str] = mapped_column(String(64), primary_key=True)
 
   invocation_id: Mapped[str] = mapped_column(String(255))
   author: Mapped[str] = mapped_column(String(255))
@@ -148,7 +148,7 @@ class StorageEvent(Base):
   partial: Mapped[bool] = mapped_column(Boolean, nullable=True)
   turn_complete: Mapped[bool] = mapped_column(Boolean, nullable=True)
   error_code: Mapped[str] = mapped_column(String(255), nullable=True)
-  error_message: Mapped[str] = mapped_column(String(255), nullable=True)
+  error_message: Mapped[str] = mapped_column(String(1024*10), nullable=True)
   interrupted: Mapped[bool] = mapped_column(Boolean, nullable=True)
 
   storage_session: Mapped[StorageSession] = relationship(
@@ -184,7 +184,7 @@ class StorageAppState(Base):
   """Represents an app state stored in the database."""
   __tablename__ = "app_states"
 
-  app_name: Mapped[str] = mapped_column(String(255), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
   state: Mapped[MutableDict[str, Any]] = mapped_column(
       MutableDict.as_mutable(DynamicJSON), default={}
   )
@@ -197,8 +197,8 @@ class StorageUserState(Base):
   """Represents a user state stored in the database."""
   __tablename__ = "user_states"
 
-  app_name: Mapped[str] = mapped_column(String(255), primary_key=True)
-  user_id: Mapped[str] = mapped_column(String(255), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
+  user_id: Mapped[str] = mapped_column(String(32), primary_key=True)
   state: Mapped[MutableDict[str, Any]] = mapped_column(
       MutableDict.as_mutable(DynamicJSON), default={}
   )
