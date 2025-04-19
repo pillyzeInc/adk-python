@@ -348,11 +348,11 @@ class DatabaseSessionService(BaseSessionService):
           sessionFactory.query(StorageEvent)
           .filter(StorageEvent.session_id == storage_session.id)
           .filter(
-              StorageEvent.timestamp < config.after_timestamp
-              if config
+              StorageEvent.timestamp > datetime.fromtimestamp(config.after_timestamp)
+              if config and config.after_timestamp
               else True
           )
-          .limit(config.num_recent_events if config else None)
+          .limit(config.num_recent_events if config and config.num_recent_events else None)
           .all()
       )
 
