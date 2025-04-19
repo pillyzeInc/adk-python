@@ -99,10 +99,10 @@ class StorageSession(Base):
   """Represents a session stored in the database."""
   __tablename__ = "sessions"
 
-  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
-  user_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(40), primary_key=True)
+  user_id: Mapped[str] = mapped_column(String(40), primary_key=True)
   id: Mapped[str] = mapped_column(
-      String(32), primary_key=True, default=lambda: str(uuid.uuid4())
+      String(40), primary_key=True, default=lambda: str(uuid.uuid4())
   )
 
   state: Mapped[MutableDict[str, Any]] = mapped_column(
@@ -127,9 +127,9 @@ class StorageEvent(Base):
   """Represents an event stored in the database."""
   __tablename__ = "events"
 
-  id: Mapped[str] = mapped_column(String(32), primary_key=True)
-  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
-  user_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+  id: Mapped[str] = mapped_column(String(40), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(40), primary_key=True)
+  user_id: Mapped[str] = mapped_column(String(40), primary_key=True)
   session_id: Mapped[str] = mapped_column(String(64), primary_key=True)
 
   invocation_id: Mapped[str] = mapped_column(String(255))
@@ -184,7 +184,7 @@ class StorageAppState(Base):
   """Represents an app state stored in the database."""
   __tablename__ = "app_states"
 
-  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(40), primary_key=True)
   state: Mapped[MutableDict[str, Any]] = mapped_column(
       MutableDict.as_mutable(DynamicJSON), default={}
   )
@@ -197,8 +197,8 @@ class StorageUserState(Base):
   """Represents a user state stored in the database."""
   __tablename__ = "user_states"
 
-  app_name: Mapped[str] = mapped_column(String(32), primary_key=True)
-  user_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+  app_name: Mapped[str] = mapped_column(String(40), primary_key=True)
+  user_id: Mapped[str] = mapped_column(String(40), primary_key=True)
   state: Mapped[MutableDict[str, Any]] = mapped_column(
       MutableDict.as_mutable(DynamicJSON), default={}
   )
