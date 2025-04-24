@@ -137,6 +137,9 @@ class Gemini(BaseLlm):
         )
 
     else:
+      logger.info("-------------------------------------------\n")
+      logger.info(f"Gemini LLM - config : {llm_request.config} / {llm_request.config.model}")
+      logger.info(f"Gemini LLM - contents : {llm_request.contents}")
       response = await self.api_client.aio.models.generate_content(
           model=llm_request.model,
           contents=llm_request.contents,
