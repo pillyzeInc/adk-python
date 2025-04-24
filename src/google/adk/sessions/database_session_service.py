@@ -353,7 +353,7 @@ class DatabaseSessionService(BaseSessionService):
               else True
           )
           .order_by(StorageEvent.timestamp.desc())
-          .limit(config.num_recent_events if config and config.num_recent_events else None)
+          .limit(config.num_recent_events if config and config.num_recent_events else 10)
           .all()
       )
 
@@ -397,6 +397,7 @@ class DatabaseSessionService(BaseSessionService):
           )
           for e in storage_events
       ]
+      session.events.reverse()
     return session
 
   @override
