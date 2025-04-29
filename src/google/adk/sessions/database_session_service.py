@@ -111,11 +111,11 @@ class StorageSession(Base):
       MutableDict.as_mutable(DynamicJSON), default={}
   )
 
-  create_time: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.datetime.now(kst_tz))
+  create_time: Mapped[DateTime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(kst_tz))
   update_time: Mapped[DateTime] = mapped_column(
       DateTime(timezone=True), # DB 컬럼 타입을 타임존 지원 타입으로 설정
-      default=lambda: datetime.datetime.now(kst_tz), # 처음 생성 시 KST 시각
-      onupdate=lambda: datetime.datetime.now(kst_tz) # 업데이트 시 KST 시각
+      default=lambda: datetime.now(kst_tz), # 처음 생성 시 KST 시각
+      onupdate=lambda: datetime.now(kst_tz) # 업데이트 시 KST 시각
   )
 
   storage_events: Mapped[list["StorageEvent"]] = relationship(
@@ -141,7 +141,7 @@ class StorageEvent(Base):
   branch: Mapped[str] = mapped_column(String(255), nullable=True)
   timestamp: Mapped[DateTime] = mapped_column(
       DateTime(timezone=True), # DB 컬럼 타입을 타임존 지원 타입으로 설정 (예: PostgreSQL의 TIMESTAMP WITH TIME ZONE)
-      default=lambda: datetime.datetime.now(kst_tz) # KST 타임존의 현재 시각 사용
+      default=lambda: datetime.now(kst_tz) # KST 타임존의 현재 시각 사용
   )
   content: Mapped[dict[str, Any]] = mapped_column(DynamicJSON, nullable=True)
   actions: Mapped[MutableDict[str, Any]] = mapped_column(PickleType)
